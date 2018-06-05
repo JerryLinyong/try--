@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://code.jquery.com/jquery-3.0.0.js"></script>
+    <link rel="stylesheet" href="http://at.alicdn.com/t/font_692250_qe488nv5yo06n7b9.css">
+    <style>
+         body {
+             background-color: grey;
+             height: 100%;
+        }
+        .box {
+            position: absolute;
+            left: calc(50vw - 25vh);
+            top: 20vh;
+            width: 50vh;
+            height: 30vh;
+            background-color: white;
+        }
+        .iconfont {
+            font-size: 6vh;
+            margin-top: 12vh;
+            color: rgba(255, 255, 255, .6)
+        }
+        .icon-right {
+            float: right;
+            margin-right: 1vh;
+        }
+        .icon-left {
+            float: left;
+            margin-left: 1vh;
+        }
+        .control {
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+        .undermove {
+            position: absolute;
+            bottom: 1vh;
+            height: 2vh;
+            width: 100%;
+            text-align: center;
+        }
+        .block {
+            display: inline-block;
+            width: 4.5vh;
+            height: 1.5vh;
+            border: 1px solid grey;
+            margin: 0 .5vh;
+            border-radius: 1vh;
+        }
+        .main {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            white-space: nowrap;
+            overflow: hidden;
+            font-size: 0;
+        }
+        .session {
+            background: no-repeat center;
+            width: 100%;
+            height: 100%;
+            display: inline-block;
+            left: 30vh;
+            background-size: cover;
+        }
+        .session:first-child {
+            margin-left: -50vh;
+        }
+        .active {
+            background-color: grey;
+            opacity: 0.9;
+        }
+        a {
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="box">
+        <div class="main">
+            <div class="session"></div>
+            <div class="session"></div>
+            <div class="session"></div>
+            <div class="session"></div>
+            <div class="session"></div>
+            <div class="session"></div>
+        </div>
+        <div class="control">
+            <a href="#" class="move iconfont icon-right"></a>
+            <a href="#" class="move iconfont icon-left"></a>
+            <div class="undermove">
+                <a href="#" class="block active"></a>
+                <a href="#" class="block"></a>
+                <a href="#" class="block"></a>
+                <a href="#" class="block"></a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $('.session').eq(0).css('background-image','url(http://img0.imgtn.bdimg.com/it/u=3757293557,2448979157&fm=27&gp=0.jpg)')
+        $('.session').eq(1).css('background-image','url(http://img0.imgtn.bdimg.com/it/u=2596137759,1766246731&fm=27&gp=0.jpg)')
+        $('.session').eq(2).css('background-image','url(http://img5.imgtn.bdimg.com/it/u=630526599,345475970&fm=27&gp=0.jpg)')
+        $('.session').eq(3).css('background-image','url(http://img2.imgtn.bdimg.com/it/u=1609944295,63784459&fm=27&gp=0.jpg)')
+        $('.session').eq(4).css('background-image','url(http://img0.imgtn.bdimg.com/it/u=3757293557,2448979157&fm=27&gp=0.jpg)')
+        $('.session').eq(5).css('background-image','url(http://img0.imgtn.bdimg.com/it/u=2596137759,1766246731&fm=27&gp=0.jpg)')
+       
+        var index = 0
+        var time  = 0
+       
+        $('.icon-right').on('click',function(){
+            if(!time == 0) return
+            time = 1
+            var distance = $('.main').width()
+            if(index === 3){
+                $('.session').eq('0').css({'margin-left': 0})
+                index = -1
+            }
+            $('.session').eq('0').animate({marginLeft:'-=' + distance},'normal')
+            index++
+            $('.block').eq(index).addClass('active').siblings().removeClass('active')
+            setTimeout(function(){time = 0},500)
+        })
+        $('.icon-left').on('click',function(){
+            if(!time == 0) return
+            time = 1
+            var distance = $('.main').width()
+            if(index === 0){
+                $('.session').eq('0').css({'margin-left':-distance*5})
+                index = 4
+            }
+            $('.session').eq('0').animate({marginLeft:'+=' + distance},'normal')
+            index--
+            $('.block').eq(index).addClass('active').siblings().removeClass('active')
+            setTimeout(function(){time = 0},500)
+              })
+        $('.block').on('click',function(){
+            var activeIndex = $(this).index()
+            var indexNow = $('.active').index()
+            var jump = activeIndex - indexNow
+            var jumpdis = jump * $('.main').width()
+            $('.session').eq('0').animate({marginLeft:'-=' + jumpdis},'normal')
+            $('.block').eq(activeIndex).addClass('active').siblings().removeClass('active')
+        })
+    </script>
+</body>
+</html>
